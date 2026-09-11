@@ -1,0 +1,196 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Bridged tokens — kept in `@theme static` so the CSS vars are always
+   emitted, not tree-shaken when no Tailwind utility consumes them.
+   Required because <VegaVisual> and <DataGrid> read these at runtime via
+   `useCssTheme()` and project them into a JS theme object (Vega's SVG output
+   cannot resolve `var()` references). */
+@theme static {
+  --color-brand: #16324f; /* bar/area fills, button-like brand surfaces */
+  --color-brand-foreground: #b8863a; /* line/point marks, branded text & emphasis */
+  --color-hover: #f1ede3; /* row/cell hover surface in DataGrid + visuals */
+}
+
+@theme {
+  /* Color tokens — light theme: "ledger" — deep navy + warm paper + muted gold
+     Usage: bg-*, text-*, border-* (e.g. bg-primary text-primary-foreground)
+     Each token has a -foreground pair for text on that surface. */
+  --color-background: #f7f5f0; /* page background — warm paper */
+  --color-foreground: #1b2430; /* default text — deep ink navy */
+
+  --color-card: #ffffff; /* card surfaces */
+  --color-card-foreground: #1b2430;
+
+  --color-popover: #ffffff; /* popover/dropdown surfaces */
+  --color-popover-foreground: #1b2430;
+
+  --color-primary: #16324f; /* primary actions & buttons — deep navy */
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #efeae0; /* secondary actions — warm sand */
+  --color-secondary-foreground: #1b2430;
+
+  --color-muted: #efeae0; /* subtle backgrounds */
+  --color-muted-foreground: #706a5d; /* subdued text */
+
+  --color-accent: #b8863a; /* accent highlights — muted gold */
+  --color-accent-foreground: #ffffff;
+
+  --color-destructive: #b3261e; /* errors & destructive actions */
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #e2ddd0; /* default border */
+  --color-input: #e2ddd0; /* input field borders */
+  --color-ring: #16324f; /* focus rings */
+
+  --radius-none: 0;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: 18px;
+  --radius-3xl: 22px;
+  --radius-4xl: 28px;
+  --radius-5xl: 34px;
+  --radius-6xl: 40px;
+  --radius-full: 9999px;
+  --radius: 10px;
+
+  /* Spacing — 4px baseline grid 
+      Usage: p-*, m-*, gap-* (e.g. p-l gap-m) */
+  --spacing-none: 0;
+  --spacing-xxs: 2px;
+  --spacing-xs: 4px;
+  --spacing-s-nudge: 6px;
+  --spacing-s: 8px;
+  --spacing-m-nudge: 10px;
+  --spacing-m: 12px;
+  --spacing-l: 16px;
+  --spacing-xl: 20px;
+  --spacing-xxl: 24px;
+  --spacing-xxxl: 32px;
+
+  /* Font Sizes — 100-based scale 
+     Usage: text-* (e.g. text-300, text-hero-900) */
+  --text-100: 10px;
+  --text-200: 12px;
+  --text-300: 14px;
+  --text-400: 16px;
+  --text-500: 20px;
+  --text-600: 24px;
+  --text-hero-700: 28px;
+  --text-hero-800: 32px;
+  --text-hero-900: 40px;
+  --text-hero-1000: 68px;
+
+  /* Line Heights — paired with font sizes
+     Usage: leading-* (e.g. leading-300) */
+  --leading-100: 14px;
+  --leading-200: 16px;
+  --leading-300: 20px;
+  --leading-400: 22px;
+  --leading-500: 28px;
+  --leading-600: 32px;
+  --leading-hero-700: 36px;
+  --leading-hero-800: 40px;
+  --leading-hero-900: 52px;
+  --leading-hero-1000: 92px;
+
+  /* Font Weights
+     Usage: font-* (e.g. font-semibold) */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Font Families
+     Usage: font-* (e.g. font-heading, font-base) */
+  --font-heading:
+    'Fraunces', Georgia,
+    /* headings, titles, display text */ 'Times New Roman', serif;
+  --font-base:
+    'IBM Plex Sans', /* body text, labels, UI controls */ -apple-system,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-monospace:
+    'IBM Plex Mono', Consolas, 'Courier New', monospace; /* code, pre-formatted text */
+  --font-numeric:
+    'IBM Plex Mono', /* KPI values, numeric displays, grid figures */
+    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Icon Sizes — 100-based scale
+     Usage: icon-size-* custom utility (e.g. icon-size-200) */
+  --icon-size-100: 12px;
+  --icon-size-200: 16px;
+  --icon-size-300: 20px;
+  --icon-size-400: 24px;
+  --icon-size-500: 28px;
+  --icon-size-600: 32px;
+  --icon-size-700: 48px;
+}
+
+@utility icon-size-* {
+  width: --value(--icon-size-*);
+  height: --value(--icon-size-*);
+}
+
+@layer base {
+  .dark {
+    /* Color tokens — dark theme: deep navy ledger, brighter gold accent */
+    --color-background: #0f1620;
+    --color-foreground: #ece7dc;
+
+    --color-card: #161f2c;
+    --color-card-foreground: #ece7dc;
+
+    --color-popover: #161f2c;
+    --color-popover-foreground: #ece7dc;
+
+    --color-primary: #5b8dbe;
+    --color-primary-foreground: #0b1220;
+
+    --color-secondary: #1d2531;
+    --color-secondary-foreground: #ece7dc;
+
+    --color-muted: #1a212c;
+    --color-muted-foreground: #9aa3af;
+
+    --color-accent: #d8af54;
+    --color-accent-foreground: #10161f;
+
+    --color-destructive: #e5605a;
+    --color-destructive-foreground: #10161f;
+
+    --color-border: #2a3340;
+    --color-input: #2a3340;
+    --color-ring: #5b8dbe;
+
+    --color-brand: #5b8dbe;
+    --color-brand-foreground: #d8af54;
+    --color-hover: #202836;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  select,
+  input,
+  textarea,
+  button {
+    font-family: inherit;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}

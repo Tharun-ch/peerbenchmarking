@@ -1,0 +1,7 @@
+activeProfile: default
+profiles:
+  default:
+    semanticModels:
+      peerBenchmarking:
+        workspaceId: 51b19e59-d8d1-41dd-9b9b-2d401b9d5754
+        itemId: e396af0a-4d85-462b-b7d9-b77a7548c582
