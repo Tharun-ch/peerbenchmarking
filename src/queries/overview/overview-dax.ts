@@ -31,37 +31,19 @@ export function daxString(value: string): string {
 }
 
 /**
- * Growth/variance measures in the model ([Revenue Growth %], etc.) all compare
- * against the prior FISCAL YEAR's same quarter (see [Revenue PY]'s DAX) — i.e.
- * "Previous Year Same Quarter". There's no stored "Previous Quarter"
- * (sequential, Q2 vs Q1) variant in the model, so it's built here as a
- * query-scoped measure (DEFINE MEASURE, valid only for that one query) rather
- * than a model change, matching the P/B measure's approach. Verified against
- * the live model: Q2 FY2026 vs Q1 FY2026 gives real distinct growth (and the
- * Q1-wraps-to-prior-FY-Q4 case checks out too).
+ * [Revenue Growth %] compares against the prior FISCAL YEAR's same quarter
+ * (see [Revenue PY]'s DAX) — i.e. "Previous Year Same Quarter". The sequential
+ * "Previous Quarter" comparison (Q2 vs Q1) is a separate stored measure,
+ * [Revenue Growth % (QoQ)], added to the model's `_Measures` table alongside
+ * its own hidden [Revenue PrevQ] helper (same PY-style pattern, one quarter
+ * back instead of one fiscal year, wrapping to Q4 of the prior FY when the
+ * current quarter is Q1). Verified against the live model.
  */
 export type ComparisonMode = 'previous-quarter' | 'previous-year-same-quarter';
 
-const REVENUE_GROWTH_PREV_QUARTER_DEFINE = `DEFINE
-    MEASURE 'Income Statement'[Revenue PrevQ] =
-        VAR CurrentFY = SELECTEDVALUE('Dim Date'[FiscalYear])
-        VAR CurrentQ = SELECTEDVALUE('Dim Date'[FiscalQuarterNum])
-        VAR PrevQ = IF(CurrentQ = 1, 4, CurrentQ - 1)
-        VAR PrevFY = IF(CurrentQ = 1, CurrentFY - 1, CurrentFY)
-        RETURN
-            CALCULATE(
-                [Revenue],
-                FILTER(
-                    ALL('Dim Date'),
-                    'Dim Date'[FiscalYear] = PrevFY && 'Dim Date'[FiscalQuarterNum] = PrevQ
-                )
-            )
-    MEASURE 'Income Statement'[Revenue Growth % PrevQ] =
-        DIVIDE([Revenue] - [Revenue PrevQ], [Revenue PrevQ])`;
-
 function revenueGrowthMeasureRef(quarter: string | undefined, comparisonMode: ComparisonMode | undefined): string {
   return quarter && comparisonMode === 'previous-quarter'
-    ? '[Revenue Growth % PrevQ]'
+    ? '[Revenue Growth % (QoQ)]'
     : '[Revenue Growth %]';
 }
 
@@ -80,9 +62,7 @@ export function buildKpiCoreQuery(
   const quarterFilter = quarter
     ? `,\n    'Dim Date'[Quarter] = ${daxString(quarter)}`
     : '';
-  const usePrevQuarter = quarter && comparisonMode === 'previous-quarter';
   return `
-${usePrevQuarter ? REVENUE_GROWTH_PREV_QUARTER_DEFINE : ''}
 EVALUATE
 CALCULATETABLE(
     SUMMARIZECOLUMNS(
@@ -140,9 +120,7 @@ export function buildHeatmapCoreQuery(
   const quarterFilter = quarter
     ? `,\n    'Dim Date'[Quarter] = ${daxString(quarter)}`
     : '';
-  const usePrevQuarter = quarter && comparisonMode === 'previous-quarter';
   return `
-${usePrevQuarter ? REVENUE_GROWTH_PREV_QUARTER_DEFINE : ''}
 EVALUATE
 CALCULATETABLE(
     SUMMARIZECOLUMNS(
