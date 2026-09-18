@@ -1,4 +1,4 @@
-id: peer-benchmarking-app
+id: peerb
 name: Peer Benchmarking App
 version: 1.0.0
 services:
@@ -13,6 +13,10 @@ services:
       - http://localhost:5174
       - http://127.0.0.1:5174
       - https://wise-coast-a0e865ca00-southeastasia.webapp.fabricapps.net
+      - https://polar-maple-6e99f944ea-southeastasia.webapp.fabricapps.net
+      - http://localhost:5176
+      - http://127.0.0.1:5176
+      - https://close-spark-7c04f72020-southeastasia.webapp.fabricapps.net
   data:
     enabled: false
   staticHosting:

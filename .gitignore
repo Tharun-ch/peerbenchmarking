@@ -43,3 +43,4 @@ src/fabric.generated.ts
 *.njsproj
 *.sln
 *.sw?
+images

@@ -17,7 +17,7 @@
   /* Color tokens — light theme: "ledger" — deep navy + warm paper + muted gold
      Usage: bg-*, text-*, border-* (e.g. bg-primary text-primary-foreground)
      Each token has a -foreground pair for text on that surface. */
-  --color-background: #f7f5f0; /* page background — warm paper */
+  --color-background: #f8f8f8; /* page background — matches reference implementation's bg-[#F8F8F8] */
   --color-foreground: #1b2430; /* default text — deep ink navy */
 
   --color-card: #ffffff; /* card surfaces */
@@ -44,6 +44,25 @@
   --color-border: #e2ddd0; /* default border */
   --color-input: #e2ddd0; /* input field borders */
   --color-ring: #16324f; /* focus rings */
+
+  /* Competitive Analysis dashboard — colors and sizes lifted directly from the
+     reference implementation at C:\Users\p90025659\Desktop\competition\src
+     (main.css, DataTable.tsx, KpiCard.tsx, TopBar.tsx). */
+  --color-ca-purple: #5038a0; /* table header bg */
+  --color-ca-accent: #5640b5; /* active tab text/underline, active toggle pill */
+  --color-ca-accent-foreground: #ffffff;
+  --color-ca-green: #e0f0d8; /* heatmap "best in row" highlight */
+  --color-ca-orange: #f8d8c0; /* heatmap "worst in row" highlight (reference calls it "peach") */
+  --color-ca-focal-border: #000000; /* solid black outline around the focal (DRL) column */
+  --color-ca-card-border: #ece8e2; /* outer card border */
+  --color-ca-table-border: #e5e5e0; /* border around the table itself, nested inside the card */
+  --color-ca-row-border: #f3f1ec; /* faint row divider inside the table */
+  --color-ca-input-border: #e6e1da; /* dropdown/select border */
+  --color-ca-row-alt: #fafafa; /* zebra stripe on odd rows */
+  --color-ca-header-bg: #fbfaf7; /* top bar background */
+  --color-ca-text: #2f2f2f; /* table cell value text */
+  --color-ca-text-muted: #8b8b8b; /* KPI labels, muted helper text */
+  --color-ca-pill: #f0eff2; /* segmented-control inactive pill bg */
 
   --radius-none: 0;
   --radius-sm: 3px;
@@ -105,19 +124,13 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Font Families
+  /* Font Families — DM Sans throughout, matching the reference implementation's
+     main.css (`--font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif`).
      Usage: font-* (e.g. font-heading, font-base) */
-  --font-heading:
-    'Fraunces', Georgia,
-    /* headings, titles, display text */ 'Times New Roman', serif;
-  --font-base:
-    'IBM Plex Sans', /* body text, labels, UI controls */ -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-monospace:
-    'IBM Plex Mono', Consolas, 'Courier New', monospace; /* code, pre-formatted text */
-  --font-numeric:
-    'IBM Plex Mono', /* KPI values, numeric displays, grid figures */
-    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-base: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-monospace: 'DM Sans', Consolas, 'Courier New', monospace; /* code, pre-formatted text */
+  --font-numeric: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 
   /* Icon Sizes — 100-based scale
      Usage: icon-size-* custom utility (e.g. icon-size-200) */
@@ -179,6 +192,7 @@
 
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: var(--font-base);
   }
 
   select,

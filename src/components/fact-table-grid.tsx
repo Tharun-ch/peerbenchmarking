@@ -1,4 +1,4 @@
-import { DataGrid } from '@microsoft/fabric-datagrid';
+import { DataGrid, type GridColumnDef } from '@microsoft/fabric-datagrid';
 import { useCssTheme } from '@microsoft/fabric-visuals';
 import { useMemo, useState } from 'react';
 
@@ -125,6 +125,14 @@ export function FactTableGrid({ config }: { config: FactTableConfig }) {
         )
       : undefined;
 
+  const gridColumns: GridColumnDef[] | undefined = dataTable?.columns.map(
+    (col) => ({
+      id: col.name,
+      header: col.displayName ?? col.name,
+      minWidth: 140,
+    })
+  );
+
   return (
     <div className="flex h-full w-full flex-col">
       <div className="flex shrink-0 flex-wrap items-center gap-s border-b border-border p-l">
@@ -156,7 +164,7 @@ export function FactTableGrid({ config }: { config: FactTableConfig }) {
 
       {dataTable ? (
         <div className="min-h-0 flex-1 overflow-auto">
-          <DataGrid data={dataTable} theme={theme} />
+          <DataGrid data={dataTable} columns={gridColumns} theme={theme} />
         </div>
       ) : (
         <div className="flex flex-1 items-center justify-center p-l text-300 text-muted-foreground">
