@@ -149,43 +149,6 @@
 }
 
 @layer base {
-  .dark {
-    /* Color tokens — dark theme: deep navy ledger, brighter gold accent */
-    --color-background: #0f1620;
-    --color-foreground: #ece7dc;
-
-    --color-card: #161f2c;
-    --color-card-foreground: #ece7dc;
-
-    --color-popover: #161f2c;
-    --color-popover-foreground: #ece7dc;
-
-    --color-primary: #5b8dbe;
-    --color-primary-foreground: #0b1220;
-
-    --color-secondary: #1d2531;
-    --color-secondary-foreground: #ece7dc;
-
-    --color-muted: #1a212c;
-    --color-muted-foreground: #9aa3af;
-
-    --color-accent: #d8af54;
-    --color-accent-foreground: #10161f;
-
-    --color-destructive: #e5605a;
-    --color-destructive-foreground: #10161f;
-
-    --color-border: #2a3340;
-    --color-input: #2a3340;
-    --color-ring: #5b8dbe;
-
-    --color-brand: #5b8dbe;
-    --color-brand-foreground: #d8af54;
-    --color-hover: #202836;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
   }

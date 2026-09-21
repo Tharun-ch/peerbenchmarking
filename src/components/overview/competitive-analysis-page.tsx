@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { CostStructureTab } from '@/components/cost-structure/cost-structure-tab';
+import { LeverageCashFlowTab } from '@/components/leverage-cashflow/leverage-cashflow-tab';
 import { ValuationTab } from '@/components/valuation/valuation-tab';
 import { TrendAnalysisTab } from '@/components/trend-analysis/trend-analysis-tab';
 import { cn } from '@/lib/utils';
@@ -26,8 +28,16 @@ const TABS = [
 
 const ENABLED_TABS: ReadonlySet<(typeof TABS)[number]> = new Set([
   'Overview',
+  'Cost Structure & EBITDA',
   'Valuation & Returns',
+  'Leverage & Cash Flow',
   'Trend Analysis',
+]);
+
+/** Tabs whose source tables carry a Quarter column (§5.1) — these get the rich Quarter+Year PeriodPicker. */
+const QUARTER_CAPABLE_TABS: ReadonlySet<(typeof TABS)[number]> = new Set([
+  'Overview',
+  'Cost Structure & EBITDA',
 ]);
 
 const DEFAULT_PERIOD: PeriodValue = {
@@ -67,7 +77,7 @@ export function CompetitiveAnalysisPage() {
             )}
             <div className="flex items-center gap-s text-[12px] text-[#555555]">
               Period:
-              {activeTab === 'Overview' ? (
+              {QUARTER_CAPABLE_TABS.has(activeTab) ? (
                 <PeriodPicker value={period} onApply={setPeriod} />
               ) : (
                 <FyYearPicker
@@ -112,8 +122,15 @@ export function CompetitiveAnalysisPage() {
             quarter={period.mode === 'quarter' ? period.quarter : undefined}
             comparisonMode={period.mode === 'quarter' ? comparisonMode : undefined}
           />
+        ) : activeTab === 'Cost Structure & EBITDA' ? (
+          <CostStructureTab
+            fyYear={period.fyYear}
+            quarter={period.mode === 'quarter' ? period.quarter : undefined}
+          />
         ) : activeTab === 'Valuation & Returns' ? (
           <ValuationTab fyYear={period.fyYear} />
+        ) : activeTab === 'Leverage & Cash Flow' ? (
+          <LeverageCashFlowTab fyYear={period.fyYear} />
         ) : activeTab === 'Trend Analysis' ? (
           <TrendAnalysisTab fyYear={period.fyYear} />
         ) : (

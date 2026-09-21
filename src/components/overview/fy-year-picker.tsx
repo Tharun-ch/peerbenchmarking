@@ -44,9 +44,9 @@ export function FyYearPicker({ value, onApply }: FyYearPickerProps) {
           <ChevronDown className="icon-size-200 text-muted-foreground" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-64 p-l" align="end">
+      <PopoverContent className="w-64 p-m text-[12px]" align="end">
         <div className="flex flex-col gap-xs">
-          <span className="text-100 font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+          <span className="text-[10px] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
             Fiscal Year
           </span>
           <FieldSelect
@@ -63,7 +63,7 @@ export function FyYearPicker({ value, onApply }: FyYearPickerProps) {
             onApply(draft);
             setOpen(false);
           }}
-          className="mt-l w-full rounded-md bg-ca-accent py-m text-300 font-semibold text-ca-accent-foreground transition-colors hover:brightness-110"
+          className="mt-m w-full rounded-md bg-ca-accent py-s text-[12px] font-semibold text-ca-accent-foreground transition-colors hover:brightness-110"
         >
           Apply
         </button>

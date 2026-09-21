@@ -55,15 +55,15 @@ export function PeriodPicker({ value, onApply }: PeriodPickerProps) {
           <ChevronDown className="icon-size-200 text-muted-foreground" />
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-72 p-l" align="end">
-        <div className="mb-l flex rounded-md bg-ca-pill p-xxs">
+      <PopoverContent className="w-64 p-m text-[12px]" align="end">
+        <div className="mb-m flex rounded-md bg-ca-pill p-xxs">
           {(['quarter', 'year'] as const).map((mode) => (
             <button
               key={mode}
               type="button"
               onClick={() => setDraft((d) => ({ ...d, mode }))}
               className={cn(
-                'flex-1 rounded-md py-s text-300 font-medium capitalize transition-colors',
+                'flex-1 rounded-md py-xs text-[12px] font-medium capitalize transition-colors',
                 draft.mode === mode
                   ? 'bg-card text-ca-accent shadow-sm'
                   : 'text-muted-foreground'
@@ -76,12 +76,12 @@ export function PeriodPicker({ value, onApply }: PeriodPickerProps) {
 
         <div
           className={cn(
-            'grid gap-m',
+            'grid gap-s',
             draft.mode === 'quarter' ? 'grid-cols-2' : 'grid-cols-1'
           )}
         >
           <div className="flex flex-col gap-xs">
-            <span className="text-100 font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+            <span className="text-[10px] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
               Fiscal Year
             </span>
             <FieldSelect
@@ -93,7 +93,7 @@ export function PeriodPicker({ value, onApply }: PeriodPickerProps) {
           </div>
           {draft.mode === 'quarter' && (
             <div className="flex flex-col gap-xs">
-              <span className="text-100 font-semibold tracking-[0.08em] text-muted-foreground uppercase">
+              <span className="text-[10px] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
                 Quarter
               </span>
               <FieldSelect
@@ -111,7 +111,7 @@ export function PeriodPicker({ value, onApply }: PeriodPickerProps) {
             onApply(draft);
             setOpen(false);
           }}
-          className="mt-l w-full rounded-md bg-ca-accent py-m text-300 font-semibold text-ca-accent-foreground transition-colors hover:brightness-110"
+          className="mt-m w-full rounded-md bg-ca-accent py-s text-[12px] font-semibold text-ca-accent-foreground transition-colors hover:brightness-110"
         >
           Apply
         </button>
